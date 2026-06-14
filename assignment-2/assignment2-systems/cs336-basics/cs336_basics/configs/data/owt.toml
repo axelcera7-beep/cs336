@@ -1,0 +1,5 @@
+dataset = "owt"
+train_data_path = "/Users/axel/Documents/stanford-cs336/assignment-1/assignment1-basics/artifacts/owt/train.bin"
+valid_data_path = "/Users/axel/Documents/stanford-cs336/assignment-1/assignment1-basics/artifacts/owt/valid.bin"
+vocab_size = 32000
+checkpoint_dir = "/Users/axel/Documents/stanford-cs336/assignment-1/assignment1-basics/artifacts/owt/checkpoints"

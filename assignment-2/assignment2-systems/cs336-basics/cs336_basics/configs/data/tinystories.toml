@@ -1,0 +1,5 @@
+dataset = "tinystories"
+train_data_path = "/Users/axel/Documents/stanford-cs336/assignment-1/assignment1-basics/artifacts/tinystories/train.bin"
+valid_data_path = "/Users/axel/Documents/stanford-cs336/assignment-1/assignment1-basics/artifacts/tinystories/valid.bin"
+vocab_size = 10000
+checkpoint_dir = "/Users/axel/Documents/stanford-cs336/assignment-1/assignment1-basics/artifacts/tinystories/checkpoints"

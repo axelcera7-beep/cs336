@@ -33,8 +33,9 @@ runs/
 outputs/
 *.log
 
-# Données & artefacts volumineux
-data/
+# Données & artefacts volumineux (datasets téléchargés, à la racine de chaque assignment)
+/assignment-1/data/
+/assignment-2/data/
 *.npy
 *.bin
 *.pt
