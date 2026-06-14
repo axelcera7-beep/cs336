@@ -46,8 +46,8 @@ def learning_rate_schedule(t: int, alpha_min: float, alpha_max: float, T_w: int,
     if t > T_c:
         return alpha_min
     
-def gradient_clipping(params: Iterable[torch.nn.Parameter], max_l2_norm: float, eps=1e-6) -> torch.Tensor:
-    l2 = torch.tensor(0.0)
+def gradient_clipping(params: Iterable[torch.nn.Parameter], max_l2_norm: float, device, eps=1e-6) -> torch.Tensor:
+    l2 = torch.tensor(0.0, device=device)
     params = list(params)
     for p in params:
         grad = p.grad

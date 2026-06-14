@@ -1,4 +1,4 @@
-device = "cpu"
+device = "cuda"
 num_steps = 2500
 lr_max = 3e-4
 lr_min = 3e-5

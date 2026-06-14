@@ -8,11 +8,12 @@ import statistics
 from cs336_basics.optimizer import AdamW
 from cs336_basics.model import Transformer
 from cs336_basics.utils import cross_entropy, gradient_clipping, learning_rate_schedule
-import tomllib
 
 def benchmarking_script(model_args, batch_size, context_length, vocab_size, device, w: int, n: int, lr_min: float = 3e-4, lr_max: float = 3e-4, warmup_steps: int = 300, num_steps: int =2500, max_l2_norm: float = 1.0):
     model = Transformer(**model_args)
+    model = model.to(device)
     optimizer = AdamW(model.parameters())
+
 
     times_for = np.zeros(n)
     times_for_back = np.zeros(n)
@@ -75,7 +76,7 @@ def run_all(model, optimizer, vocab_size, batch_size, context_length, device, lr
     logits = model(inputs)  
     loss_train = cross_entropy(logits=logits, targets=targets)
     loss_train.backward()
-    gradient_clipping(params=model.parameters(), max_l2_norm=max_l2_norm)
+    gradient_clipping(params=model.parameters(), max_l2_norm=max_l2_norm, device=device)
     optimizer.step()
     _sync_gpu(device)
     time_end = time.perf_counter()

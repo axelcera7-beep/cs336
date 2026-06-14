@@ -66,7 +66,7 @@ def training_together():
       logits = model(inputs)
       loss_train = cross_entropy(logits=logits, targets=targets)
       loss_train.backward()
-      gradient_clipping(params=model.parameters(), max_l2_norm=max_l2_norm)
+      gradient_clipping(params=model.parameters(), max_l2_norm=max_l2_norm, device=device)
       optimizer.step()
 
       if step % steps_valid_loss == 0:

@@ -68,11 +68,11 @@ class RoPE(nn.Module):
         super().__init__()
         if not theta:
             theta = 10**5
-        exponenent = (2*torch.arange(1, d_k // 2 + 1)-2) / d_k
+        exponenent = (2*torch.arange(1, d_k // 2 + 1, device=device)-2) / d_k
         freq = (theta ** exponenent).unsqueeze(0)
         inv_freq = 1.0 / freq
         #[max_seq_len, 1] * [1, d/2]
-        theta_i_k = torch.arange(max_seq_len).unsqueeze(1) * inv_freq
+        theta_i_k = torch.arange(max_seq_len, device=device).unsqueeze(1) * inv_freq
         cos_i_k = torch.cos(theta_i_k)
         sin_i_k = torch.sin(theta_i_k)
         self.register_buffer("cos_i_k", cos_i_k)
@@ -108,6 +108,7 @@ class CausalMultiHeadAttention(nn.Module):
         self.output_proj = Linear(d_model, d_model, device=device, dtype=dtype)
         self.context_length = context_length
         self.theta = theta
+        self.device = device
     
     def forward(self, x: torch.Tensor, token_positions: torch.Tensor | None = None) -> torch.Tensor:
         Q = self._split_heads(self.q_proj(x))
@@ -115,10 +116,10 @@ class CausalMultiHeadAttention(nn.Module):
         V = self._split_heads(self.v_proj(x))
 
         if self.theta:
-            rope = RoPE(theta=self.theta, d_k=self.head_dim, max_seq_len=self.context_length)
+            rope = RoPE(theta=self.theta, d_k=self.head_dim, max_seq_len=self.context_length, device=self.device)
             Q = rope(Q, token_positions)
             K = rope(K, token_positions)
-        mask = torch.triu(torch.ones(x.shape[-2],x.shape[-2], dtype=torch.bool), diagonal=1)
+        mask = torch.triu(torch.ones(x.shape[-2],x.shape[-2], dtype=torch.bool, device=self.device), diagonal=1)
         attention_head = scaled_dot_product_attention(q=Q, k=K, v=V, mask=~mask)
         # x.shape = [batch_size,  num_heads, seq_len, head_dim]
         attention_head = attention_head.transpose(-2, -3) # [batch_size, seq_len, num_heads, head_dim]
