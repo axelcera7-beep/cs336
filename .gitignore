@@ -1,0 +1,47 @@
+# macOS / éditeurs
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+ENV/
+
+# Caches outils
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.ipynb_checkpoints/
+
+# Suivi d'expériences / logs
+wandb/
+runs/
+outputs/
+*.log
+
+# Données & artefacts volumineux
+data/
+*.npy
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+*.gz
+*.zip
+*.tar

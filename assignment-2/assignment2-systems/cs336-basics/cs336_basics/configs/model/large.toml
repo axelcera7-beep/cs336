@@ -1,0 +1,6 @@
+d_model = 1280
+d_ff = 5120
+num_layers = 36
+num_heads = 20
+context_length = 512
+theta = 10000
